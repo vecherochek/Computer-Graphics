@@ -101,6 +101,7 @@
             this.button6.Size = new System.Drawing.Size(60, 60);
             this.button6.TabIndex = 5;
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -110,6 +111,7 @@
             this.button7.Size = new System.Drawing.Size(60, 60);
             this.button7.TabIndex = 6;
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
             // 
@@ -119,6 +121,7 @@
             this.button8.Size = new System.Drawing.Size(60, 60);
             this.button8.TabIndex = 7;
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
@@ -157,6 +160,7 @@
             this.button10.TabIndex = 11;
             this.button10.Text = "Повернуть";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // Form1
             // 
