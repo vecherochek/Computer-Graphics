@@ -1,10 +1,10 @@
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\bin\Debug\CompGr-3.exe.config
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\bin\Debug\CompGr-3.exe
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\bin\Debug\CompGr-3.pdb
-C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\obj\Debug\CompGr-3.csprojAssemblyReference.cache
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\obj\Debug\CompGr_3.Form1.resources
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\obj\Debug\CompGr_3.Properties.Resources.resources
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\obj\Debug\CompGr-3.csproj.GenerateResource.cache
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\obj\Debug\CompGr-3.csproj.CoreCompileInputs.cache
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\obj\Debug\CompGr-3.exe
 C:\Users\pbure\source\repos\computer-graphics\CompGr-3\CompGr-3\obj\Debug\CompGr-3.pdb
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-3\CompGr-3\obj\Debug\CompGr-3.csprojAssemblyReference.cache

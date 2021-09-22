@@ -19,19 +19,15 @@ namespace CompGr_1
             comboBox1.Items.AddRange(new string[] { "2,1", "3", "4", "5,5", "6"});
             comboBox1.Text = "2,1";           
         }
-
         private double  x1, y1, x2, y2;
         private double  fi, t, k, r, R, width, hight;
-
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
-
         private PointF[] PointXY = new PointF[(int)10000];
         private Pen pen = new Pen(Color.AntiqueWhite, 2);
         private SolidBrush brush = new SolidBrush(Color.AntiqueWhite);
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (!double.TryParse(comboBox1.Text, out k) || k <= 0)
