@@ -169,7 +169,6 @@ namespace CompGr_2
                 {
                     tmpIm[i + AddPix, j + AddPix] = bmp.GetPixel(i, j);
                 }
-
             for (int i = AddPix; i < tmpW - AddPix; i++)
                 for (int j = AddPix; j < tmpH - AddPix; j++)
                 {

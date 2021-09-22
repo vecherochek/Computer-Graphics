@@ -19,16 +19,14 @@ namespace CompGr_3
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Graphics gfx = e.Graphics;
-            Pen skyBluePen = new Pen(Brushes.Black);
-            int cx = ClientSize.Width / 2;
-            int cy = ClientSize.Height / 2;
-            gfx.DrawLine(skyBluePen, cx, 0, cx, ClientSize.Height);
-            gfx.DrawLine(skyBluePen, 0, cy, ClientSize.Width, cy);
+            Graphics g = e.Graphics;
+            Pen skyBluePen = new Pen(Color.Black);
 
-            Pen SqPen = new Pen(Brushes.BlueViolet);
+            int x = ClientSize.Width / 2;
+            int y = ClientSize.Height / 2;
 
-
+            g.DrawLine(skyBluePen, x, 0, x, ClientSize.Height);
+            g.DrawLine(skyBluePen, 0, y, ClientSize.Width, y);
         }
     }
 }
