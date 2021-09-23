@@ -33,7 +33,6 @@ namespace CompGr_3
             Graphics g = e.Graphics;
             Pen pen = new Pen(Color.Black);
             SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
-            SolidBrush brush1 = new SolidBrush(Color.Pink);
 
             int x = ClientSize.Width / 2;
             int y = ClientSize.Height / 2;
@@ -185,7 +184,7 @@ namespace CompGr_3
             if (!double.TryParse(textBox1.Text, out a))
             {
                 MessageBox.Show(
-                "Введите угол в градусах",
+                "Введите угол в градусах,а дробные числа через запятую.",
                 "Предупреждение",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error,
@@ -200,14 +199,14 @@ namespace CompGr_3
             points = MatrixMult(points, matr);
             this.Invalidate();
         }
-        //поворот на угол относительно начала координат
+        //поворот на угол относительно точки
         private void button11_Click(object sender, EventArgs e)
         {
             double a;
             if (!double.TryParse(textBox1.Text, out a))
             {
                 MessageBox.Show(
-                "Введите угол в градусах",
+                "Введите угол в градусах,а дробные числа через запятую.",
                 "Предупреждение",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error,
@@ -218,7 +217,7 @@ namespace CompGr_3
             a = a * Math.PI / 180;
             double[,] matr = { {Math.Cos(a), -Math.Sin(a), 0},
                             {Math.Sin(a), Math.Cos(a), 0},
-                            {0, 0, 1}};
+                            {mouse_x*(-Math.Cos(a) + 1) - mouse_y * Math.Sin(a), mouse_y*(-Math.Cos(a) + 1) + mouse_x * Math.Sin(a), 1}};
             points = MatrixMult(points, matr);
             this.Invalidate();
         }
@@ -239,10 +238,9 @@ namespace CompGr_3
             if (e.Button == MouseButtons.Left)
             {
                 mouse_x = (Convert.ToDouble(e.X) - x) / scale;
-                mouse_y = (-y + Convert.ToDouble(e.Y)) / scale;
+                mouse_y = (y - Convert.ToDouble(e.Y)) / scale;
                 textBox2.Text = "(" + Convert.ToString(Math.Round(mouse_x, 2)) + ";" + Convert.ToString(Math.Round(mouse_y, 2)) + ")";
             }
         }
-
     }
 }
