@@ -16,36 +16,41 @@ namespace CompGr_3
         {
             InitializeComponent();
         }
-        double [,] points = { {-2, 2, 1},
+        double scale = 70;
+        double mouse_x = 0;
+        double mouse_y = 0;
+        double[,] points = { {-2, 2, 1},
                               {0, 2, 1},
-                              {-2, 0, 1},
+                              {0, 1, 1},
                               {0, 1, 1},
                               {2, 1, 1},
-                              {0, -1, 1}};       
-        Graphics g;
+                              {2, -1, 1},
+                              {0, -1, 1},
+                              {0, 0, 1},
+                              {-2, 0, 1}};       
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            g = e.Graphics;
+            Graphics g = e.Graphics;
             Pen pen = new Pen(Color.Black);
             SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
+            SolidBrush brush1 = new SolidBrush(Color.Pink);
 
             int x = ClientSize.Width / 2;
             int y = ClientSize.Height / 2;
-            int scale = 70;
 
-            double rec1_x = points[0, 0];
-            double rec1_y = points[0, 1];
-            double rec1_w = Math.Abs(points[0, 0] - points[1, 0]);
+            Point[] points_0 = new Point[points.GetUpperBound(0) + 1];
+            for (int i = 0; i < points.GetUpperBound(0) + 1; i++)
+            {
+                points_0[i] = new Point(Convert.ToInt32(points[i, 0] * scale + x), Convert.ToInt32(y - points[i, 1] * scale));
+            }
+         
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddLines(points_0);
 
-            double rec2_x = points[3, 0];
-            double rec2_y = points[3, 1];
-            double rec2_w = Math.Abs(points[3, 0] - points[4, 0]);
-
-            g.Clear(Color.SeaShell);
-            g.FillRectangle(brush, Convert.ToInt32(rec1_x * scale + x), Convert.ToInt32(y - rec1_y * scale), Convert.ToInt32(rec1_w  * scale), Convert.ToInt32(rec1_w * scale));
-            g.FillRectangle(brush, Convert.ToInt32(rec2_x * scale + x), Convert.ToInt32(y - rec2_y * scale), Convert.ToInt32(rec2_w * scale), Convert.ToInt32(rec2_w * scale));
+            g.FillPath(brush, path);
             g.DrawLine(pen, x, 0, x, ClientSize.Height);
             g.DrawLine(pen, 0, y, ClientSize.Width, y);
+
         }   
         private double[,] MatrixMult(double[,] matrixA, double[,] matrixB)
         {
@@ -68,7 +73,7 @@ namespace CompGr_3
             }
             return matrix;
         }
-        private double[,] MatrixDiv(double[,] matrixA, double s)
+        private double[,] MatrixNorm(double[,] matrixA)
         {
             int A_Rows = matrixA.GetUpperBound(0) + 1;
             int A_Columns = matrixA.GetUpperBound(1) + 1;
@@ -79,7 +84,7 @@ namespace CompGr_3
             {
                 for (int j = 0; j < A_Columns; j++)
                 {                               
-                    matrix[i, j] = matrixA[i, j] / s;                    
+                    matrix[i, j] = matrixA[i, j] / matrixA[i, 2];                    
                 }
             }
             return matrix;
@@ -123,13 +128,21 @@ namespace CompGr_3
         //увеличить
         private void button5_Click(object sender, EventArgs e)
         {
-            points = MatrixDiv(points, 0.835);
+            double[,] matr = { {1, 0, 0},
+                            {0, 1, 0},
+                            {0, 0, 0.835}};
+            points = MatrixMult(points, matr);
+            points = MatrixNorm(points);
             this.Invalidate();
         }
         //уменьшить
         private void button6_Click(object sender, EventArgs e)
         {
-            points = MatrixDiv(points, 1.2);
+            double[,] matr = { {1, 0, 0},
+                            {0, 1, 0},
+                            {0, 0, 1.2}};
+            points = MatrixMult(points, matr);
+            points = MatrixNorm(points);
             this.Invalidate();
         }
         //OX
@@ -139,15 +152,6 @@ namespace CompGr_3
                             {0, -1, 0},
                             {0, 0, 1}};
             points = MatrixMult(points, matr);
-
-            double tmp = points[0, 1];
-            points[0, 1] = points[2, 1];
-            points[2, 1] = tmp;
-
-            tmp = points[3, 1];
-            points[3, 1] = points[5, 1];
-            points[5, 1] = tmp;
-
             this.Invalidate();
         }
         //OY
@@ -157,30 +161,24 @@ namespace CompGr_3
                             {0, 1, 0},
                             {0, 0, 1}};
             points = MatrixMult(points, matr);
-
-            double tmp = points[0, 0];
-            points[0, 0] = points[1, 0];
-            points[1, 0] = tmp;
-
-            tmp = points[3, 0];
-            points[3, 0] = points[4, 0];
-            points[4, 0] = tmp;
-
             this.Invalidate();
         }
         //восстановить
         private void button9_Click(object sender, EventArgs e)
         {
-            double[,] points_0 = { {-2, 2, 1},
+            double[,] points_1 = { {-2, 2, 1},
                               {0, 2, 1},
-                              {-2, 0, 1},
+                              {0, 1, 1},
                               {0, 1, 1},
                               {2, 1, 1},
-                              {0, -1, 1}};
-            points = points_0;
+                              {2, -1, 1},
+                              {0, -1, 1},
+                              {0, 0, 1},
+                              {-2, 0, 1}};
+            points = points_1;
             this.Invalidate();
         }
-        //нужно написать отрисовку фигуры после поворота
+        //поворот на угол относительно начала координат
         private void button10_Click(object sender, EventArgs e)
         {
             double a;
@@ -196,10 +194,55 @@ namespace CompGr_3
                 return;
             }
             a = a * Math.PI / 180;
-            double[,] matr = { {Math.Cos(a), Math.Sin(a), 0},
-                            {-Math.Sin(a), Math.Cos(a), 0},
+            double[,] matr = { {Math.Cos(a), -Math.Sin(a), 0},
+                            {Math.Sin(a), Math.Cos(a), 0},
                             {0, 0, 1}};
             points = MatrixMult(points, matr);
+            this.Invalidate();
         }
+        //поворот на угол относительно начала координат
+        private void button11_Click(object sender, EventArgs e)
+        {
+            double a;
+            if (!double.TryParse(textBox1.Text, out a))
+            {
+                MessageBox.Show(
+                "Введите угол в градусах",
+                "Предупреждение",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+                return;
+            }
+            a = a * Math.PI / 180;
+            double[,] matr = { {Math.Cos(a), -Math.Sin(a), 0},
+                            {Math.Sin(a), Math.Cos(a), 0},
+                            {0, 0, 1}};
+            points = MatrixMult(points, matr);
+            this.Invalidate();
+        }
+        //X = Y
+        private void button12_Click(object sender, EventArgs e)
+        {
+            double[,] matr = { {1, 1, 0},
+                               {0, 1, 0},
+                               {0, 0, 1}};
+            points = MatrixMult(points, matr);
+            points = MatrixNorm(points);
+            this.Invalidate();
+        }
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        {
+            double x = ClientSize.Width / 2;
+            double y = ClientSize.Height / 2;
+            if (e.Button == MouseButtons.Left)
+            {
+                mouse_x = (Convert.ToDouble(e.X) - x) / scale;
+                mouse_y = (-y + Convert.ToDouble(e.Y)) / scale;
+                textBox2.Text = "(" + Convert.ToString(Math.Round(mouse_x, 2)) + ";" + Convert.ToString(Math.Round(mouse_y, 2)) + ")";
+            }
+        }
+
     }
 }
