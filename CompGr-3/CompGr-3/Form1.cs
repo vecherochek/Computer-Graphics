@@ -15,6 +15,7 @@ namespace CompGr_3
         public Form1()
         {
             InitializeComponent();
+            this.KeyPreview = true;
         }
         double scale = 70;
         double mouse_x = 0;
@@ -224,8 +225,8 @@ namespace CompGr_3
         //X = Y
         private void button12_Click(object sender, EventArgs e)
         {
-            double[,] matr = { {1, 1, 0},
-                               {0, 1, 0},
+            double[,] matr = { {0, 1, 0},
+                               {1, 0, 0},
                                {0, 0, 1}};
             points = MatrixMult(points, matr);
             points = MatrixNorm(points);
@@ -240,6 +241,32 @@ namespace CompGr_3
                 mouse_x = (Convert.ToDouble(e.X) - x) / scale;
                 mouse_y = (y - Convert.ToDouble(e.Y)) / scale;
                 textBox2.Text = "(" + Convert.ToString(Math.Round(mouse_x, 2)) + ";" + Convert.ToString(Math.Round(mouse_y, 2)) + ")";
+            }
+        }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Right:
+                    button1.PerformClick();
+                    break;
+                case Keys.Left:
+                    button2.PerformClick();
+                    break;
+                case Keys.Up:
+                    button3.PerformClick();
+                    break;
+                case Keys.Down:
+                    button4.PerformClick();
+                    break;
+                case Keys.Add:
+                    button5.PerformClick();
+                    break;
+                case Keys.Subtract:
+                    button6.PerformClick();
+                    break;
+                default:
+                    break;
             }
         }
     }
