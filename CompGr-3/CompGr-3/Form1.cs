@@ -16,6 +16,8 @@ namespace CompGr_3
         {
             InitializeComponent();
             this.KeyPreview = true;
+            textBox2.Text = "(0;0)";
+            textBox1.Text = "45";
         }
         double scale = 70;
         double mouse_x = 0;
@@ -243,7 +245,8 @@ namespace CompGr_3
                 textBox2.Text = "(" + Convert.ToString(Math.Round(mouse_x, 2)) + ";" + Convert.ToString(Math.Round(mouse_y, 2)) + ")";
             }
         }
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
