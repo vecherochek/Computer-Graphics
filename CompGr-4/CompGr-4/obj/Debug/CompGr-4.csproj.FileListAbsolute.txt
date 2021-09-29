@@ -1,0 +1,10 @@
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\bin\Debug\CompGr-4.exe.config
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\bin\Debug\CompGr-4.exe
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\bin\Debug\CompGr-4.pdb
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\obj\Debug\CompGr-4.csprojAssemblyReference.cache
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\obj\Debug\CompGr_4.Form1.resources
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\obj\Debug\CompGr_4.Properties.Resources.resources
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\obj\Debug\CompGr-4.csproj.GenerateResource.cache
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\obj\Debug\CompGr-4.csproj.CoreCompileInputs.cache
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\obj\Debug\CompGr-4.exe
+C:\Users\pbure\source\repos\Computer-Graphics\CompGr-4\CompGr-4\obj\Debug\CompGr-4.pdb

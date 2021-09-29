@@ -86,7 +86,7 @@ namespace CompGr_3
             {
                 for (int j = 0; j < A_Columns; j++)
                 {                               
-                    matrix[i, j] = matrixA[i, j] / matrixA[i, 2];                    
+                    matrix[i, j] = matrixA[i, j] / matrixA[i, A_Columns - 1];                    
                 }
             }
             return matrix;
