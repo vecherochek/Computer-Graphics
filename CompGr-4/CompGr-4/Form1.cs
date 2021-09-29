@@ -15,60 +15,67 @@ namespace CompGr_4
         public Form1()
         {
             InitializeComponent();
+            textBox1.Text = "45";
         }
-        double[,] points_3D = { {0, 0, 3, 1},
-                              {1, 0, 0, 1},
-                              {0, 0, -3, 1},
-                              {0, 2, 0, 1},
-                              {1, 0, 0, 1},
-                              {0, -2, 0, 1},
-                              {0, 0, -3, 1},
-                              {1, 0, 0, 1},
-                              {-1, 0, 0, 1},
-                              {0, -2, 0, 1},
-                              {0, 0, 3, 1},
-                              {-1, 0, 0, 1},
-                              {0, 2, 0, 1},
-                              {0, 0, 3, 1}};
-        double[,] points_2D;
-        double scale = 70;
+        public static double[,] points_3D = { {0, 0, 2, 1},
+                              {2, 0, 0, 1},
+                              {0, 0, -2, 1},
+                              {0, 4, 0, 1},
+                              {2, 0, 0, 1},
+                              {0, -4, 0, 1},
+                              {0, 0, -2, 1},
+                              {-2, 0, 0, 1},
+                              {0, -4, 0, 1},
+                              {0, 0, 2, 1},
+                              {-2, 0, 0, 1},
+                              {0, 4, 0, 1},
+                              {0, 0, 2, 1}};
+        public static double[,] points_2D;
+        public static double scale = 50;
+        string RB_text;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             Pen pen = new Pen(Color.Black);
             Pen pen1 = new Pen(Color.Black, 10);
+            Pen pen2 = new Pen(Color.Silver);
+            pen2.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
+            Point[] points0_2D = new Point[points_3D.GetUpperBound(0) + 1];
 
             int x = ClientSize.Width / 2;
             int y = ClientSize.Height / 2;
+
             double l = 0.5;
             double B = Math.Atan(2);
             double[,] matrix = { {1, 0, 0, 0},
                               {0, 1, 0, 0},
                               {l * Math.Cos(B), l * Math.Sin(B), 0, 0},
                               {0, 0, 0, 1}};
-
-            Point[] points0_2D = new Point[points_3D.GetUpperBound(0) + 1];
-
             points_2D = MatrixMult(points_3D, matrix);
             points_2D = MatrixNorm(points_2D);
 
             for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
             {
                 points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale));
-                g.DrawEllipse(pen1, Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale), 1, 1);
+                //g.DrawEllipse(pen1, Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale), 1, 1);
             }
-
 
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddLines(points0_2D);
-
+            
             g.DrawPath(pen, path);
+            //0X
             g.DrawLine(pen, x, 0, x, ClientSize.Height / 2);
+            g.DrawLine(pen2, x, ClientSize.Height / 2, x, ClientSize.Height);
+            //OY
             g.DrawLine(pen, ClientSize.Width / 2, y, ClientSize.Width, y);
+            g.DrawLine(pen2, ClientSize.Width / 2, y, 0, y);
+            //OZ
             g.DrawLine(pen, ClientSize.Width / 2, y, ClientSize.Width - ClientSize.Height, ClientSize.Height);
+            g.DrawLine(pen2, ClientSize.Width / 2, y, ClientSize.Height, 0);
         }
-        private double[,] MatrixMult(double[,] matrixA, double[,] matrixB)
+        public static double[,] MatrixMult(double[,] matrixA, double[,] matrixB)
         {
             int A_Rows = matrixA.GetUpperBound(0) + 1;
             int A_Columns = matrixA.GetUpperBound(1) + 1;
@@ -89,11 +96,11 @@ namespace CompGr_4
             }
             return matrix;
         }
-        private double[,] MatrixNorm(double[,] matrixA)
+        public static double[,] MatrixNorm(double[,] matrixA)
         {
             int A_Rows = matrixA.GetUpperBound(0) + 1;
             int A_Columns = matrixA.GetUpperBound(1) + 1;
-
+            
             var matrix = new double[A_Rows, A_Columns];
 
             for (int i = 0; i < A_Rows; i++)
@@ -104,6 +111,200 @@ namespace CompGr_4
                 }
             }
             return matrix;
+        }
+        //перемещение по OX в +
+        private void button1_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {1, 0, 0, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //перемещение по OX в -
+        private void button2_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {-1, 0, 0, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //перемещение по OY в +
+        private void button3_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 1, 0, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //перемещение по OY в -
+        private void button4_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, -1, 0, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //перемещение по OZ в +
+        private void button5_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 1, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //перемещение по OZ в -
+        private void button6_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, -1, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //уменьшить
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 0, 1.2}};
+            points_3D = MatrixMult(points_3D, matrix);
+            points_3D = MatrixNorm(points_3D);
+            this.Invalidate();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 0, 0.835}};
+            points_3D = MatrixMult(points_3D, matrix);
+            points_3D = MatrixNorm(points_3D);
+            this.Invalidate();
+        }
+        //отразить по OY
+        private void button10_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, -1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 0, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //отразить по OX
+        private void button9_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {-1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 0, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+        //отразить по OZ
+        private void button11_Click(object sender, EventArgs e)
+        {
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {0, 0, -1, 0},
+                              {0, 0, 0, 1}};
+            points_3D = MatrixMult(points_3D, matrix);
+            this.Invalidate();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+                RB_text = (sender as RadioButton).Text;         
+        }
+        //поворот вокруг осей на угол
+        private void button12_Click(object sender, EventArgs e)
+        {
+            if (!double.TryParse(textBox1.Text, out double a))
+            {
+                MessageBox.Show(
+                "Введите угол в градусах,а дробные числа через запятую.",
+                "Предупреждение",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+                return;
+            }
+            a = a * Math.PI / 180;
+            double[,] matrix_OX = new double[,] { {1, 0, 0, 0},
+                              {0, Math.Cos(a), Math.Sin(a), 0},
+                              {0, -Math.Sin(a), Math.Cos(a), 0},
+                              {0, 0, 0, 1}};
+            double[,] matrix_OY = new double[,] { {Math.Cos(a), 0, -Math.Sin(a), 0},
+                              {0, 1, 0, 0},
+                              {Math.Sin(a), 0, Math.Cos(a), 0},
+                              {0, 0, 0, 1}};
+            double[,] matrix_OZ = new double[,] { {Math.Cos(a), Math.Sin(a), 0, 0},
+                              {-Math.Sin(a), Math.Cos(a), 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 0, 1}};
+            switch (RB_text)
+            {
+                case "поворот по OX":
+                    points_3D = MatrixMult(points_3D, matrix_OX);
+                    break;
+                case "поворот по OY":
+                    points_3D = MatrixMult(points_3D, matrix_OY);
+                    break;
+                case "поворот по OZ":
+                    points_3D = MatrixMult(points_3D, matrix_OZ);
+                    break;
+                default:                   
+                    break;
+            }
+            points_3D = MatrixNorm(points_3D);
+            this.Invalidate();
+        }
+        //восстановить
+        private void button13_Click(object sender, EventArgs e)
+        {
+            double[,] points_1 = { {0, 0, 2, 1},
+                              {2, 0, 0, 1},
+                              {0, 0, -2, 1},
+                              {0, 4, 0, 1},
+                              {2, 0, 0, 1},
+                              {0, -4, 0, 1},
+                              {0, 0, -2, 1},
+                              {-2, 0, 0, 1},
+                              {0, -4, 0, 1},
+                              {0, 0, 2, 1},
+                              {-2, 0, 0, 1},
+                              {0, 4, 0, 1},
+                              {0, 0, 2, 1}};
+            points_3D = points_1;
+            this.Invalidate();
+        }
+        private void button14_Click(object sender, EventArgs e)
+        {
+            Form2 form = new Form2();
+            form.Owner = this;
+            form.ShowDialog();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Form3 form = new Form3();
+            form.Owner = this;
+            form.ShowDialog();
         }
     }
 }
