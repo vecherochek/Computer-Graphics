@@ -56,17 +56,24 @@ namespace CompGr_4
             g.DrawLine(pen2, ClientSize.Width / 2, y, (ClientSize.Width + ClientSize.Height) / 2, 0);
 
             //нарисуем фигуру
+            double l = 1;
+            double B = 45 * Math.PI / 180;
+            //double B = Math.Atan(2);
+            double[,] matrix = { {1, 0, 0, 0},
+                              {0, 1, 0, 0},
+                              {l * Math.Cos(B), l * Math.Sin(B), 0, 0},
+                              {0, 0, 0, 1}};
             if (checkBox1.Checked == true)
             {
-                DrawWireframe(g, ClientSize.Width, ClientSize.Height);
+                DrawWireframe(g, matrix, ClientSize.Width, ClientSize.Height);
             }
             else
             {
-                DrawFill(g, ClientSize.Width, ClientSize.Height);
+                DrawFill(g, matrix, ClientSize.Width, ClientSize.Height);
             }
             
         }
-        private void DrawFill(Graphics g, int Form_x, int Form_y)
+        private void DrawFill(Graphics g, double[,] matrix, int Form_x, int Form_y)
         {
             SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
 
@@ -75,21 +82,14 @@ namespace CompGr_4
 
 
         }
-        public static void DrawWireframe(Graphics g, int Form_x, int Form_y) 
+        public static void DrawWireframe(Graphics g, double[,] matrix, int Form_x, int Form_y) 
         {
             Pen pen = new Pen(Color.Black);
             //Pen pen1 = new Pen(Color.Black, 10);
 
             int x = Form_x / 2;
             int y = Form_y / 2;
-
-            double l = 1;
-            double B = 45 * Math.PI / 180;
-            //double B = Math.Atan(2);
-            double[,] matrix = { {1, 0, 0, 0},
-                              {0, 1, 0, 0},
-                              {l * Math.Cos(B), l * Math.Sin(B), 0, 0},
-                              {0, 0, 0, 1}};
+        
             points_2D = MatrixMult(points_3D, matrix);
             points_2D = MatrixNorm(points_2D);
 
@@ -254,7 +254,6 @@ namespace CompGr_4
             points_3D = MatrixMult(points_3D, matrix);
             this.Invalidate();
         }
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if ((sender as RadioButton).Checked)

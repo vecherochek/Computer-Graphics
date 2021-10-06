@@ -18,9 +18,8 @@ namespace CompGr_4
             InitializeComponent();
             radioButton1.Checked = true;
         }
-        double[,] points2_2D;
         string RB_text;
-        bool flag = true;
+        double[,] points_2D;
         double[,] matrix ={ {1, 0, 0, 0},
                               {0, 1, 0, 0},
                               {0, 0, 0, 0},
@@ -28,43 +27,53 @@ namespace CompGr_4
         private void Form4_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            Pen pen = new Pen(Color.Black);
-            SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
-            Point[] points0_2D = new Point[Form1.points_3D.GetUpperBound(0) + 1];
 
             int x = ClientSize.Width / 2;
             int y = ClientSize.Height / 2;
 
-            points2_2D = Form1.MatrixMult(Form1.points_3D, matrix);
-            points2_2D = Form1.MatrixNorm(points2_2D);
-            if (flag)
+            //нарисуем оси
+            Pen pen = new Pen(Color.Black);
+            g.DrawLine(pen, x, 0, x, y * 2);
+            g.DrawLine(pen, 0, y, x * 2, y);
+
+            //нарисуем проекцию
+            DrawWireframe(g, matrix, ClientSize.Width, ClientSize.Height);
+        }
+        private void DrawWireframe(Graphics g, double[,] matrix, int Form_x, int Form_y)
+        {
+            Pen pen = new Pen(Color.Black);
+
+            int x = Form_x / 2;
+            int y = Form_y / 2;
+
+            points_2D = Form1.MatrixMult(Form1.points_3D, matrix);
+            points_2D = Form1.MatrixNorm(points_2D);
+
+            Point[] points0_2D = new Point[Form1.points_3D.GetUpperBound(0) + 1];
+            if (RB_text == "сбоку")
             {
-                for (int i = 0; i < points2_2D.GetUpperBound(0) + 1; i++)
+                for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
                 {
-                    points0_2D[i] = new Point(Convert.ToInt32(points2_2D[i, 0] * Form1.scale + x), Convert.ToInt32(y - points2_2D[i, 1] * Form1.scale));
+                    points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 2] * Form1.scale + x), Convert.ToInt32(y - points_2D[i, 1] * Form1.scale));
                 }
             }
             else
             {
-                for (int i = 0; i < points2_2D.GetUpperBound(0) + 1; i++)
+                for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
                 {
-                    points0_2D[i] = new Point(Convert.ToInt32(points2_2D[i, 2] * Form1.scale + x), Convert.ToInt32(y - points2_2D[i, 1] * Form1.scale));
+                    points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 0] * Form1.scale + x), Convert.ToInt32(y - points_2D[i, 1] * Form1.scale));
                 }
             }
-            
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddLines(points0_2D);
 
             g.DrawPath(pen, path);
-            g.DrawLine(pen, x, 0, x, ClientSize.Height);
-            g.DrawLine(pen, 0, y, ClientSize.Width, y);
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if ((sender as RadioButton).Checked)
                 RB_text = (sender as RadioButton).Text;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             double[,] matrix_1 ={ {1, 0, 0, 0},
@@ -87,22 +96,18 @@ namespace CompGr_4
             {
                 case "спереди":
                     matrix = matrix_1;
-                    flag = true;
                     this.Invalidate();
                     break;
                 case "сбоку":
                     matrix = matrix_2;
-                    flag = false;
                     this.Invalidate();
                     break;
                 case "диметрическая":
                     matrix = matrix_3;
-                    flag = true;
                     this.Invalidate();
                     break;
                 case "изометрическая":
                     matrix = matrix_4;
-                    flag = true;
                     this.Invalidate();
                     break;
                 default:
