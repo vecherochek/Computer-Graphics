@@ -18,16 +18,16 @@ namespace CompGr_4
             textBox1.Text = "45";
         }
         public static double[,] points_3D = { {0, 0, 2, 1},
-                              {2, 0, 0, 1},
+                              {3, 0, 0, 1},
                               {0, 0, -2, 1},
                               {0, 4, 0, 1},
-                              {2, 0, 0, 1},
+                              {3, 0, 0, 1},
                               {0, -4, 0, 1},
                               {0, 0, -2, 1},
-                              {-2, 0, 0, 1},
+                              {-3, 0, 0, 1},
                               {0, -4, 0, 1},
                               {0, 0, 2, 1},
-                              {-2, 0, 0, 1},
+                              {-3, 0, 0, 1},
                               {0, 4, 0, 1},
                               {0, 0, 2, 1}};
         public static double[,] points_2D;
@@ -36,18 +36,56 @@ namespace CompGr_4
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
+
+            //нарисуем оси
             Pen pen = new Pen(Color.Black);
-            Pen pen1 = new Pen(Color.Black, 10);
             Pen pen2 = new Pen(Color.Silver);
             pen2.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
-            Point[] points0_2D = new Point[points_3D.GetUpperBound(0) + 1];
 
             int x = ClientSize.Width / 2;
             int y = ClientSize.Height / 2;
 
-            double l = 0.5;
-            double B = Math.Atan(2);
+            //0X
+            g.DrawLine(pen, x, 0, x, ClientSize.Height / 2);
+            g.DrawLine(pen2, x, ClientSize.Height / 2, x, ClientSize.Height);
+            //OY
+            g.DrawLine(pen, ClientSize.Width / 2, y, ClientSize.Width, y);
+            g.DrawLine(pen2, ClientSize.Width / 2, y, 0, y);
+            //OZ
+            g.DrawLine(pen, ClientSize.Width / 2, y, (ClientSize.Width - ClientSize.Height) / 2, ClientSize.Height);
+            g.DrawLine(pen2, ClientSize.Width / 2, y, (ClientSize.Width + ClientSize.Height) / 2, 0);
+
+            //нарисуем фигуру
+            if (checkBox1.Checked == true)
+            {
+                DrawWireframe(g, ClientSize.Width, ClientSize.Height);
+            }
+            else
+            {
+                DrawFill(g, ClientSize.Width, ClientSize.Height);
+            }
+            
+        }
+        private void DrawFill(Graphics g, int Form_x, int Form_y)
+        {
+            SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
+
+            int x = Form_x / 2;
+            int y = Form_y / 2;
+
+
+        }
+        public static void DrawWireframe(Graphics g, int Form_x, int Form_y) 
+        {
+            Pen pen = new Pen(Color.Black);
+            //Pen pen1 = new Pen(Color.Black, 10);
+
+            int x = Form_x / 2;
+            int y = Form_y / 2;
+
+            double l = 1;
+            double B = 45 * Math.PI / 180;
+            //double B = Math.Atan(2);
             double[,] matrix = { {1, 0, 0, 0},
                               {0, 1, 0, 0},
                               {l * Math.Cos(B), l * Math.Sin(B), 0, 0},
@@ -55,6 +93,7 @@ namespace CompGr_4
             points_2D = MatrixMult(points_3D, matrix);
             points_2D = MatrixNorm(points_2D);
 
+            Point[] points0_2D = new Point[points_3D.GetUpperBound(0) + 1];
             for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
             {
                 points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale));
@@ -63,17 +102,8 @@ namespace CompGr_4
 
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddLines(points0_2D);
-            
-            g.DrawPath(pen, path);
-            //0X
-            g.DrawLine(pen, x, 0, x, ClientSize.Height / 2);
-            g.DrawLine(pen2, x, ClientSize.Height / 2, x, ClientSize.Height);
-            //OY
-            g.DrawLine(pen, ClientSize.Width / 2, y, ClientSize.Width, y);
-            g.DrawLine(pen2, ClientSize.Width / 2, y, 0, y);
-            //OZ
-            g.DrawLine(pen, ClientSize.Width / 2, y, ClientSize.Width - ClientSize.Height, ClientSize.Height);
-            g.DrawLine(pen2, ClientSize.Width / 2, y, ClientSize.Height, 0);
+
+            g.DrawPath(pen, path);           
         }
         public static double[,] MatrixMult(double[,] matrixA, double[,] matrixB)
         {
@@ -278,16 +308,16 @@ namespace CompGr_4
         private void button13_Click(object sender, EventArgs e)
         {
             double[,] points_1 = { {0, 0, 2, 1},
-                              {2, 0, 0, 1},
+                              {3, 0, 0, 1},
                               {0, 0, -2, 1},
                               {0, 4, 0, 1},
-                              {2, 0, 0, 1},
+                              {3, 0, 0, 1},
                               {0, -4, 0, 1},
                               {0, 0, -2, 1},
-                              {-2, 0, 0, 1},
+                              {-3, 0, 0, 1},
                               {0, -4, 0, 1},
                               {0, 0, 2, 1},
-                              {-2, 0, 0, 1},
+                              {-3, 0, 0, 1},
                               {0, 4, 0, 1},
                               {0, 0, 2, 1}};
             points_3D = points_1;
@@ -295,16 +325,39 @@ namespace CompGr_4
         }
         private void button14_Click(object sender, EventArgs e)
         {
-            Form2 form = new Form2();
-            form.Owner = this;
-            form.ShowDialog();
-        }
-
-        private void button15_Click(object sender, EventArgs e)
+            switch (RB_text)
+            {
+                case "косоугольная":
+                    Form2 form2 = new Form2();
+                    form2.Owner = this;
+                    form2.ShowDialog();
+                    break;
+                case "центральная oдноточечная":
+                    Form3 form3 = new Form3();
+                    form3.Owner = this;
+                    form3.ShowDialog();
+                    break;
+                case "паралленьная ортогональной":
+                    Form4 form4 = new Form4();
+                    form4.Owner = this;
+                    form4.ShowDialog();
+                    break;
+                default:
+                    break;
+            }           
+        }       
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            Form3 form = new Form3();
-            form.Owner = this;
-            form.ShowDialog();
+            if ((sender as RadioButton).Checked)
+                RB_text = (sender as RadioButton).Text;
+        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            this.Invalidate();
+        }
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            this.Invalidate();
         }
     }
 }

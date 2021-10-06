@@ -18,7 +18,6 @@ namespace CompGr_4
             InitializeComponent();
         }
         double[,] points2_2D;
-        double scale2 = Form1.scale / 1.25;
         private void Form3_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -29,7 +28,7 @@ namespace CompGr_4
             int x = ClientSize.Width / 2;
             int y = ClientSize.Height / 2;
 
-            double k = 0.5;
+            double k = -10;
             double r = 1 / k;
             double[,] matrix = { {1, 0, 0, 0},
                               {0, 1, 0, 0},
@@ -39,7 +38,7 @@ namespace CompGr_4
             points2_2D = Form1.MatrixNorm(points2_2D);
             for (int i = 0; i < points2_2D.GetUpperBound(0) + 1; i++)
             {
-                points0_2D[i] = new Point(Convert.ToInt32(points2_2D[i, 0] * scale2 + x), Convert.ToInt32(y - points2_2D[i, 1] * scale2));
+                points0_2D[i] = new Point(Convert.ToInt32(points2_2D[i, 0] * Form1.scale + x), Convert.ToInt32(y - points2_2D[i, 1] * Form1.scale));
             }
 
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
