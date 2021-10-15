@@ -405,7 +405,7 @@ namespace CompGr_4
         {
             this.Invalidate();
         }
-
+        //верчение
         private void timer1_Tick(object sender, EventArgs e)
         {
             double a = 2 * Math.PI / 180;
@@ -438,7 +438,6 @@ namespace CompGr_4
             points_3D = MatrixNorm(points_3D);
             this.Invalidate();
         }
-
         private void radioButton7_CheckedChanged(object sender, EventArgs e)
         {
             if ((sender as RadioButton).Checked)
