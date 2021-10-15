@@ -285,22 +285,22 @@ namespace CompGr_4
             points_3D = MatrixNorm(points_3D);
             this.Invalidate();
         }
-        //отразить по OY
+        //отразить по OX
         private void button10_Click(object sender, EventArgs e)
         {
             double[,] matrix = { {1, 0, 0, 0},
                               {0, -1, 0, 0},
-                              {0, 0, 1, 0},
+                              {0, 0, -1, 0},
                               {0, 0, 0, 1}};
             points_3D = MatrixMult(points_3D, matrix);
             this.Invalidate();
         }
-        //отразить по OX
+        //отразить по OY
         private void button9_Click(object sender, EventArgs e)
         {
             double[,] matrix = { {-1, 0, 0, 0},
                               {0, 1, 0, 0},
-                              {0, 0, 1, 0},
+                              {0, 0, -1, 0},
                               {0, 0, 0, 1}};
             points_3D = MatrixMult(points_3D, matrix);
             this.Invalidate();
@@ -308,9 +308,9 @@ namespace CompGr_4
         //отразить по OZ
         private void button11_Click(object sender, EventArgs e)
         {
-            double[,] matrix = { {1, 0, 0, 0},
-                              {0, 1, 0, 0},
-                              {0, 0, -1, 0},
+            double[,] matrix = { {-1, 0, 0, 0},
+                              {0, -1, 0, 0},
+                              {0, 0, 1, 0},
                               {0, 0, 0, 1}};
             points_3D = MatrixMult(points_3D, matrix);
             this.Invalidate();
