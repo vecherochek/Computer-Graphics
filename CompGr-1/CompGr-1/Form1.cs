@@ -21,10 +21,6 @@ namespace CompGr_1
         }
         private double  x1, y1, x2, y2;
         private double  fi, t, k, r, R, width, hight;
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
         private PointF[] PointXY = new PointF[(int)10000];
         private Pen pen = new Pen(Color.AntiqueWhite, 2);
         private SolidBrush brush = new SolidBrush(Color.AntiqueWhite);
@@ -90,14 +86,6 @@ namespace CompGr_1
             g.DrawLines(pen, PointXY);
             g.DrawEllipse(pen, 10, 10, (float)width, (float)hight);
             g.FillEllipse(brush, (float)x2 - 10, (float)y2 - 10, 20, 20);
-        }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

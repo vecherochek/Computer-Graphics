@@ -60,7 +60,6 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(184, 33);
             this.comboBox1.TabIndex = 2;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // timer1
             // 
@@ -74,7 +73,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(500, 500);
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // label1
@@ -88,7 +86,6 @@
             this.label1.Size = new System.Drawing.Size(47, 25);
             this.label1.TabIndex = 4;
             this.label1.Text = "k = ";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Form1
             // 

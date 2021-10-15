@@ -96,7 +96,6 @@ namespace CompGr_4
 
         private void DrawFill(Graphics g, double[,] matrix, int Form_x, int Form_y)
         {
-
             int x = Form_x / 2;
             int y = Form_y / 2;
 
@@ -367,7 +366,6 @@ namespace CompGr_4
         //восстановить
         private void button13_Click(object sender, EventArgs e)
         {
-
             points_3D = points_1;
             this.Invalidate();
         }
@@ -406,6 +404,50 @@ namespace CompGr_4
         private void Form1_Resize(object sender, EventArgs e)
         {
             this.Invalidate();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            double a = 2 * Math.PI / 180;
+            double[,] matrix_OX = new double[,] { {1, 0, 0, 0},
+                              {0, Math.Cos(a), Math.Sin(a), 0},
+                              {0, -Math.Sin(a), Math.Cos(a), 0},
+                              {0, 0, 0, 1}};
+            double[,] matrix_OY = new double[,] { {Math.Cos(a), 0, -Math.Sin(a), 0},
+                              {0, 1, 0, 0},
+                              {Math.Sin(a), 0, Math.Cos(a), 0},
+                              {0, 0, 0, 1}};
+            double[,] matrix_OZ = new double[,] { {Math.Cos(a), Math.Sin(a), 0, 0},
+                              {-Math.Sin(a), Math.Cos(a), 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 0, 1}};
+            switch (RB_text)
+            {
+                case "поворот по OX":
+                    points_3D = MatrixMult(points_3D, matrix_OX);
+                    break;
+                case "поворот по OY":
+                    points_3D = MatrixMult(points_3D, matrix_OY);
+                    break;
+                case "поворот по OZ":
+                    points_3D = MatrixMult(points_3D, matrix_OZ);
+                    break;
+                default:
+                    break;
+            }
+            points_3D = MatrixNorm(points_3D);
+            this.Invalidate();
+        }
+
+        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+            {
+                RB_text = (sender as RadioButton).Text;
+                if (RB_text != "остановить")
+                    timer1.Enabled = true;
+            }
+            else timer1.Enabled = false;
         }
     }
 }
