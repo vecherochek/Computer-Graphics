@@ -17,19 +17,40 @@ namespace CompGr_4
             InitializeComponent();
             textBox1.Text = "45";
         }
-        public static double[,] points_3D = { {0, 0, 2, 1},
-                              {3, 0, 0, 1},
-                              {0, 0, -2, 1},
-                              {0, 4, 0, 1},
-                              {3, 0, 0, 1},
-                              {0, -4, 0, 1},
-                              {0, 0, -2, 1},
-                              {-3, 0, 0, 1},
-                              {0, -4, 0, 1},
-                              {0, 0, 2, 1},
-                              {-3, 0, 0, 1},
-                              {0, 4, 0, 1},
-                              {0, 0, 2, 1}};
+        public static double[,] points_3D = {
+                                             //1   
+                                             { 0,  4,  0, 1},
+                                             { 0,  0,  2, 1},
+                                             { 3,  0,  0, 1},
+                                             //2
+                                             { 0,  4,  0, 1},
+                                             { 3,  0,  0, 1},
+                                             { 0,  0, -2, 1},
+                                             //3
+                                             { 0,  4,  0, 1},
+                                             { 0,  0, -2, 1},
+                                             {-3,  0,  0, 1},
+                                             //4
+                                             { 0,  4,  0, 1},
+                                             {-3,  0,  0, 1},
+                                             { 0,  0,  2, 1},                                            
+                                             //5
+                                             { 0, -4,  0, 1},
+                                             { 3,  0,  0, 1},
+                                             { 0,  0,  2, 1},
+                                             //6
+                                             { 0, -4,  0, 1},
+                                             { 0,  0, -2, 1},
+                                             { 3,  0,  0, 1},
+                                             //7
+                                             { 0, -4,  0, 1},
+                                             {-3,  0,  0, 1},
+                                             { 0,  0, -2, 1},
+                                             //8
+                                             { 0, -4,  0, 1},
+                                             { 0,  0,  2, 1},
+                                             {-3,  0,  0, 1}};
+        private double[,] points_1 = points_3D;
         public static double[,] points_2D;
         public static double scale = 50;
         string RB_text;
@@ -46,14 +67,14 @@ namespace CompGr_4
             int y = ClientSize.Height / 2;
 
             //0X
-            g.DrawLine(pen, x, 0, x, ClientSize.Height / 2);
-            g.DrawLine(pen2, x, ClientSize.Height / 2, x, ClientSize.Height);
+            g.DrawLine(pen, x, 0, x, y);
+            g.DrawLine(pen2, x, y, x, ClientSize.Height);
             //OY
-            g.DrawLine(pen, ClientSize.Width / 2, y, ClientSize.Width, y);
-            g.DrawLine(pen2, ClientSize.Width / 2, y, 0, y);
+            g.DrawLine(pen, x, y, ClientSize.Width, y);
+            g.DrawLine(pen2, x, y, 0, y);
             //OZ
-            g.DrawLine(pen, ClientSize.Width / 2, y, (ClientSize.Width - ClientSize.Height) / 2, ClientSize.Height);
-            g.DrawLine(pen2, ClientSize.Width / 2, y, (ClientSize.Width + ClientSize.Height) / 2, 0);
+            g.DrawLine(pen, x, y, x - y, ClientSize.Height);
+            g.DrawLine(pen2, x, y, x + y, 0);
 
             //нарисуем фигуру
             double l = 1;
@@ -71,39 +92,79 @@ namespace CompGr_4
             {
                 DrawFill(g, matrix, ClientSize.Width, ClientSize.Height);
             }
-            
         }
+
         private void DrawFill(Graphics g, double[,] matrix, int Form_x, int Form_y)
         {
-            SolidBrush brush = new SolidBrush(Color.DarkSeaGreen);
 
             int x = Form_x / 2;
             int y = Form_y / 2;
 
+            Point[] points0_2D = new Point[3];
+            double[,] points_2D = MatrixMult(points_3D, matrix);
+            double[] v = { 0.7, 0.7, -1, 0 };
+            //double[,] v = MatrixMult(r, matrix);
 
+            for (int i = 0, j = 0; i < points_3D.GetUpperBound(0); i += 3, j++)
+            {
+                double x1 = points_3D[i, 0];
+                double y1 = points_3D[i, 1];
+                double z1 = points_3D[i, 2];
+
+                double x2 = points_3D[i + 1, 0];
+                double y2 = points_3D[i + 1, 1];
+                double z2 = points_3D[i + 1, 2];
+
+                double x3 = points_3D[i + 2, 0];
+                double y3 = points_3D[i + 2, 1];
+                double z3 = points_3D[i + 2, 2];
+
+                double nx = (y2 - y1) * (z3 - z2) - (z2 - z1) * (y3 - y2);
+                double ny = (z2 - z1) * (x3 - x2) - (x2 - x1) * (z3 - z2);
+                double nz = (x2 - x1) * (y3 - y2) - (y2 - y1) * (x3 - x2);
+
+                double check = nx * v[0] + ny * v[1] + nz * v[2];
+
+                if (check > 0)
+                {
+                    points0_2D[0] = new Point(Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale));
+                    points0_2D[1] = new Point(Convert.ToInt32(points_2D[i + 1, 0] * scale + x), Convert.ToInt32(y - points_2D[i + 1, 1] * scale));
+                    points0_2D[2] = new Point(Convert.ToInt32(points_2D[i + 2, 0] * scale + x), Convert.ToInt32(y - points_2D[i + 2, 1] * scale));
+
+                    double a_l = Math.Sqrt(nx * nx + ny * ny + nz * nz);
+                    double b_l = Math.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+
+                    double cos_ = check / (a_l * b_l);
+
+                    SolidBrush brush = new SolidBrush(Color.FromArgb(Convert.ToInt32(246 * cos_), Convert.ToInt32(146 * cos_), Convert.ToInt32(114 * cos_)));
+
+                    System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+                    path.AddLines(points0_2D);
+
+                    g.FillPath(brush, path);
+                    path.Dispose();
+                }
+            }
         }
-        public static void DrawWireframe(Graphics g, double[,] matrix, int Form_x, int Form_y) 
+        public static void DrawWireframe(Graphics g, double[,] matrix, int Form_x, int Form_y)
         {
             Pen pen = new Pen(Color.Black);
-            //Pen pen1 = new Pen(Color.Black, 10);
 
             int x = Form_x / 2;
             int y = Form_y / 2;
-        
-            points_2D = MatrixMult(points_3D, matrix);
-            points_2D = MatrixNorm(points_2D);
 
+            double[,] points_2D = MatrixMult(points_3D, matrix);
             Point[] points0_2D = new Point[points_3D.GetUpperBound(0) + 1];
             for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
             {
                 points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale));
-                //g.DrawEllipse(pen1, Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale), 1, 1);
             }
 
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddLines(points0_2D);
 
-            g.DrawPath(pen, path);           
+            g.DrawPath(pen, path);
+            path.Dispose();
         }
         public static double[,] MatrixMult(double[,] matrixA, double[,] matrixB)
         {
@@ -130,7 +191,7 @@ namespace CompGr_4
         {
             int A_Rows = matrixA.GetUpperBound(0) + 1;
             int A_Columns = matrixA.GetUpperBound(1) + 1;
-            
+
             var matrix = new double[A_Rows, A_Columns];
 
             for (int i = 0; i < A_Rows; i++)
@@ -257,7 +318,7 @@ namespace CompGr_4
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if ((sender as RadioButton).Checked)
-                RB_text = (sender as RadioButton).Text;         
+                RB_text = (sender as RadioButton).Text;
         }
         //поворот вокруг осей на угол
         private void button12_Click(object sender, EventArgs e)
@@ -297,7 +358,7 @@ namespace CompGr_4
                 case "поворот по OZ":
                     points_3D = MatrixMult(points_3D, matrix_OZ);
                     break;
-                default:                   
+                default:
                     break;
             }
             points_3D = MatrixNorm(points_3D);
@@ -306,19 +367,7 @@ namespace CompGr_4
         //восстановить
         private void button13_Click(object sender, EventArgs e)
         {
-            double[,] points_1 = { {0, 0, 2, 1},
-                              {3, 0, 0, 1},
-                              {0, 0, -2, 1},
-                              {0, 4, 0, 1},
-                              {3, 0, 0, 1},
-                              {0, -4, 0, 1},
-                              {0, 0, -2, 1},
-                              {-3, 0, 0, 1},
-                              {0, -4, 0, 1},
-                              {0, 0, 2, 1},
-                              {-3, 0, 0, 1},
-                              {0, 4, 0, 1},
-                              {0, 0, 2, 1}};
+
             points_3D = points_1;
             this.Invalidate();
         }
@@ -343,8 +392,8 @@ namespace CompGr_4
                     break;
                 default:
                     break;
-            }           
-        }       
+            }
+        }
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             if ((sender as RadioButton).Checked)
