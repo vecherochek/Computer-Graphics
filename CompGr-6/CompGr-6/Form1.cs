@@ -89,7 +89,7 @@ namespace CompGr_6
             gl.End();
             gl.Flush();
 
-            angle += 1.0;
+            angle += 2.0;
 
         }
         private void radioButton_EnabledChanged(object sender, EventArgs e)

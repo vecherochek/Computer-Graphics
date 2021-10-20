@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.openGLControl1 = new SharpGL.OpenGLControl();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
@@ -39,7 +40,7 @@
             // 
             this.openGLControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.openGLControl1.DrawFPS = false;
-            this.openGLControl1.FrameRate = 40;
+            this.openGLControl1.FrameRate = 35;
             this.openGLControl1.Location = new System.Drawing.Point(0, 0);
             this.openGLControl1.Name = "openGLControl1";
             this.openGLControl1.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
@@ -51,6 +52,7 @@
             // 
             // radioButton1
             // 
+            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton1.AutoSize = true;
             this.radioButton1.BackColor = System.Drawing.Color.Black;
             this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -66,6 +68,7 @@
             // 
             // radioButton2
             // 
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton2.AutoSize = true;
             this.radioButton2.BackColor = System.Drawing.Color.Black;
             this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -81,6 +84,7 @@
             // 
             // radioButton3
             // 
+            this.radioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton3.AutoSize = true;
             this.radioButton3.BackColor = System.Drawing.Color.Black;
             this.radioButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -103,8 +107,9 @@
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.openGLControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Вертим цветной октаэдр";
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
