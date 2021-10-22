@@ -46,7 +46,7 @@ namespace CompGr_6
 
             gl.Begin(OpenGL.GL_TRIANGLES);
 
-            gl.Color(1.0, 0.0, 0.0);
+            gl.Color(angle, 1.0, 0.0, 0.0);
             gl.Vertex(0.0, 2.0, 0.0);
             gl.Vertex(0.0, 0.0, 1.0);
             gl.Vertex(1.5, 0.0, 0.0);
