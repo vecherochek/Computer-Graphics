@@ -104,7 +104,7 @@ namespace CompGr_4
             double[] v = { 0.7, 0.7, -1, 0 };
             //double[,] v = MatrixMult(r, matrix);
 
-            for (int i = 0, j = 0; i < points_3D.GetUpperBound(0); i += 3, j++)
+            for (int i = 0; i < points_3D.GetUpperBound(0); i += 3)
             {
                 double x1 = points_3D[i, 0];
                 double y1 = points_3D[i, 1];
