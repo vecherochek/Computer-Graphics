@@ -15,7 +15,6 @@ namespace CompGr_7
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
@@ -187,6 +186,7 @@ namespace CompGr_7
         }
         private void DrawTeapot(OpenGL gl, Color color, uint type)
         {
+            gl.Disable(OpenGL.GL_BLEND);
             gl.Color(color.R, color.G, color.B);
             SharpGL.SceneGraph.Primitives.Teapot f = new SharpGL.SceneGraph.Primitives.Teapot();
             f.Draw(gl, 4, 1, type);

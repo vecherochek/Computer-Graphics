@@ -54,14 +54,14 @@ namespace CompGr_4
             {
                 for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
                 {
-                    points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 2] * Form1.scale + x), Convert.ToInt32(y - points_2D[i, 1] * Form1.scale));
+                    points0_2D[i] = new Point((int)(points_2D[i, 2] * Form1.scale + x), (int)(y - points_2D[i, 1] * Form1.scale));
                 }
             }
             else
             {
                 for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
                 {
-                    points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 0] * Form1.scale + x), Convert.ToInt32(y - points_2D[i, 1] * Form1.scale));
+                    points0_2D[i] = new Point((int)(points_2D[i, 0] * Form1.scale + x), (int)(y - points_2D[i, 1] * Form1.scale));
                 }
             }
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();

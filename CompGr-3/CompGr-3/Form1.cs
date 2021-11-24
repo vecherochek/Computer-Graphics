@@ -43,7 +43,7 @@ namespace CompGr_3
             Point[] points_0 = new Point[points.GetUpperBound(0) + 1];
             for (int i = 0; i < points.GetUpperBound(0) + 1; i++)
             {
-                points_0[i] = new Point(Convert.ToInt32(points[i, 0] * scale + x), Convert.ToInt32(y - points[i, 1] * scale));
+                points_0[i] = new Point((int)(points[i, 0] * scale + x), (int)(y - points[i, 1] * scale));
             }
          
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
@@ -240,8 +240,8 @@ namespace CompGr_3
             double y = ClientSize.Height / 2;
             if (e.Button == MouseButtons.Left)
             {
-                mouse_x = (Convert.ToDouble(e.X) - x) / scale;
-                mouse_y = (y - Convert.ToDouble(e.Y)) / scale;
+                mouse_x = ((double)(e.X) - x) / scale;
+                mouse_y = (y - (double)(e.Y)) / scale;
                 textBox2.Text = "(" + Convert.ToString(Math.Round(mouse_x, 2)) + ";" + Convert.ToString(Math.Round(mouse_y, 2)) + ")";
             }
         }

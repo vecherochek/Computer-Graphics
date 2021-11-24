@@ -126,16 +126,16 @@ namespace CompGr_4
 
                 if (check > 0)
                 {
-                    points0_2D[0] = new Point(Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale));
-                    points0_2D[1] = new Point(Convert.ToInt32(points_2D[i + 1, 0] * scale + x), Convert.ToInt32(y - points_2D[i + 1, 1] * scale));
-                    points0_2D[2] = new Point(Convert.ToInt32(points_2D[i + 2, 0] * scale + x), Convert.ToInt32(y - points_2D[i + 2, 1] * scale));
+                    points0_2D[0] = new Point((int)(points_2D[i, 0] * scale + x), (int)(y - points_2D[i, 1] * scale));
+                    points0_2D[1] = new Point((int)(points_2D[i + 1, 0] * scale + x), (int)(y - points_2D[i + 1, 1] * scale));
+                    points0_2D[2] = new Point((int)(points_2D[i + 2, 0] * scale + x), (int)(y - points_2D[i + 2, 1] * scale));
 
                     double a_l = Math.Sqrt(nx * nx + ny * ny + nz * nz);
                     double b_l = Math.Sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 
                     double cos_ = check / (a_l * b_l);
 
-                    SolidBrush brush = new SolidBrush(Color.FromArgb(Convert.ToInt32(246 * cos_), Convert.ToInt32(146 * cos_), Convert.ToInt32(114 * cos_)));
+                    SolidBrush brush = new SolidBrush(Color.FromArgb((int)(246 * cos_), (int)(146 * cos_), (int)(114 * cos_)));
 
                     System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
                     path.AddLines(points0_2D);
@@ -156,7 +156,7 @@ namespace CompGr_4
             Point[] points0_2D = new Point[points_3D.GetUpperBound(0) + 1];
             for (int i = 0; i < points_2D.GetUpperBound(0) + 1; i++)
             {
-                points0_2D[i] = new Point(Convert.ToInt32(points_2D[i, 0] * scale + x), Convert.ToInt32(y - points_2D[i, 1] * scale));
+                points0_2D[i] = new Point((int)(points_2D[i, 0] * scale + x), (int)(y - points_2D[i, 1] * scale));
             }
 
             System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
@@ -273,7 +273,7 @@ namespace CompGr_4
             points_3D = MatrixNorm(points_3D);
             this.Invalidate();
         }
-
+        //увеличить
         private void button8_Click(object sender, EventArgs e)
         {
             double[,] matrix = { {1, 0, 0, 0},

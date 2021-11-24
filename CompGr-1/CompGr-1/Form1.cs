@@ -15,7 +15,6 @@ namespace CompGr_1
         public Form1()
         {
             InitializeComponent();
-
             comboBox1.Items.AddRange(new string[] { "2,1", "3", "4", "5,5", "6"});
             comboBox1.Text = "2,1";           
         }
@@ -37,14 +36,8 @@ namespace CompGr_1
                 MessageBoxOptions.DefaultDesktopOnly);
                 return;
             }
-
-            width = pictureBox1.Width - 20;
-            hight = pictureBox1.Height - 20;
-            R = width / 2;
+            
             r = R / k;
-            x1 = width / 2 + 10;
-            y1 = hight / 2 + 10;
-
             for (int i = 0; i < 10000; i++)
             {
                 t = i * Math.PI / 180;
@@ -74,7 +67,7 @@ namespace CompGr_1
             x1 = width / 2 + 10;
             y1 = hight / 2 + 10;
 
-            fi += 1;
+            fi += 10;
             t = fi * Math.PI / 180;
 
             x2 = x1 - r * (k - 1) * (Math.Cos(t) + Math.Cos((k - 1) * t) / (k - 1));
